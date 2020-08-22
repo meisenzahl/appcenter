@@ -26,6 +26,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     }
 
     private Gtk.Revealer view_mode_revealer;
+    private Gtk.Revealer home_button_revealer;
     private Gtk.Stack custom_title_stack;
     private Gtk.Label homepage_header;
     private Granite.Widgets.ModeButton view_mode;
@@ -36,6 +37,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     private Homepage homepage;
     private Views.SearchView search_view;
     private Gtk.Button return_button;
+    private Gtk.Button home_button;
     private ulong task_finished_connection = 0U;
     private Gee.LinkedList<string> return_button_history;
     private Gtk.Label updates_badge;
@@ -158,6 +160,16 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         view_mode_revealer.transition_type = Gtk.RevealerTransitionType.CROSSFADE;
         view_mode_revealer.add (view_mode_overlay);
 
+        home_button = new Gtk.Button () {
+            label = _("Home"),
+            valign = Gtk.Align.CENTER
+        };
+
+        home_button_revealer = new Gtk.Revealer ();
+        home_button_revealer.reveal_child = true;
+        home_button_revealer.transition_type = Gtk.RevealerTransitionType.CROSSFADE;
+        home_button_revealer.add (home_button);
+
         homepage_header = new Gtk.Label (null);
         homepage_header.get_style_context ().add_class (Gtk.STYLE_CLASS_TITLE);
 
@@ -177,6 +189,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         headerbar.show_close_button = true;
         headerbar.set_custom_title (custom_title_stack);
         headerbar.pack_start (return_button);
+        headerbar.pack_end (home_button_revealer);
         headerbar.pack_end (search_entry);
         headerbar.pack_end (spinner);
 
